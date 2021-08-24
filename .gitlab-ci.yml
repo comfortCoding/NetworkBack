@@ -1,0 +1,60 @@
+stages:
+    - build
+    - test
+    - sonar
+    - deploy
+
+build:
+  stage: build
+  only:
+    - master
+  except:
+    - tags
+  before_script:
+    - echo "socnet is in stop state for now"
+    - sudo systemctl stop socnet.service  
+    - mvn clean
+  script:
+    - echo "Do your build here and there"
+    - mvn compile -Dmaven.test.skip=true
+
+main_testing:
+  stage: test
+  only:
+    - master
+  except:
+    - tags
+  script:
+    - echo "Do a test here and there"
+    - mvn test -Dspring.profiles.active=test
+    - echo "For example run a test suite"
+
+additional_testing:
+  stage: test
+  only:
+    - master
+  except:
+    - tags
+  script:
+    - echo "Do another parallel test here.."
+    - echo "For example run a lint test"
+
+update_sonar_report:
+  stage: sonar
+  only:
+    - master
+  except:
+    - tags
+  script:
+    - mvn clean package sonar:sonar -Dsonar.login=e5e266e93d8140c7ea8932a43bfd55d369b47efa -Dmaven.test.skip=true
+
+deploy:
+  stage: deploy
+  only:
+    - master
+  except:
+    - tags
+  script:
+    - echo "Do your deploy here"
+    - mvn clean package -Dmaven.test.skip=true
+    - sudo systemctl start socnet.service
