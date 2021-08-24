@@ -265,19 +265,22 @@ public class PostCommentService {
         if (commentID == null) {
             throw new BadRequestException(Config.STRING_NO_COMMENT_ID);
         }
-
-        var like = new PostLike();
-
-        like.setTime(new Date());
-        like.setPerson(getCurrentUser());
-
         var likedComment = commentRepository.findCommentByID(commentID);
 
         if (likedComment == null) {
-            throw new NotFoundException(Config.STRING_NO_POST_IN_DB);
+            throw new NotFoundException(Config.STRING_NO_COMMENT_IN_DB);
         }
-        like.setComment(likedComment);
-        likeRepository.save(like);
+
+        var personID = getCurrentUser().getId();
+
+        if (commentRepository.isUserLikedComment(personID, commentID) == 0) {
+            var like = new PostLike();
+
+            like.setTime(new Date());
+            like.setPerson(getCurrentUser());
+            like.setComment(likedComment);
+            likeRepository.save(like);
+        }
 
         List<AuthorizedPerson> personDTOS = new ArrayList<>();
 
