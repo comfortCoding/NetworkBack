@@ -11,15 +11,6 @@ import java.util.List;
 
 public interface LikeRepository extends JpaRepository<PostLike, Integer> {
 
-    @Query("SELECT DISTINCT " +
-            "pl.id " +
-            "FROM Person p " +
-            "INNER JOIN PostLike pl " +
-            "ON p.id = pl.post.id " +
-            "WHERE p.email = :email " +
-            "AND pl.post.id = :postID ")
-    Integer userLikedPost(String email, Integer postID);
-
     @Query("SELECT " +
             "COUNT(pl.id) " +
             "FROM PostLike pl " +

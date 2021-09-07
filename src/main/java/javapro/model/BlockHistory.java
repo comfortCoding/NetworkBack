@@ -1,11 +1,9 @@
 package javapro.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import javapro.model.view.PostCommentView;
 import javapro.model.view.PostView;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,8 +20,6 @@ public class BlockHistory implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @DateTimeFormat(pattern = "yyyy.MM.dd HH-mm")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH-mm")
     @Column(name = "time", nullable = false)
     private Date time;
 

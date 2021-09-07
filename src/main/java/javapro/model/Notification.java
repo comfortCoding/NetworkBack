@@ -1,10 +1,8 @@
 package javapro.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import javapro.model.enums.NotificationType;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,8 +24,6 @@ public class Notification implements Serializable {
     @JoinColumn(name = "notification_type", nullable = false)
     private NotificationType notificationType;
 
-    @DateTimeFormat(pattern = "yyyy.MM.dd HH-mm")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH-mm")
     @Column(name = "sent_time", nullable = false)
     private Timestamp sentTime;
 

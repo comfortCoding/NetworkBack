@@ -1,10 +1,8 @@
 package javapro.model;
 
 import javapro.model.enums.FriendshipStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,8 +31,6 @@ public class Friendship implements Serializable {
     @JoinColumn(name = "dst_person_id", foreignKey = @ForeignKey(name = "FK_dst_person_id"))
     private Person dstPersonId;
 
-    @DateTimeFormat(pattern = "yyyy.MM.dd HH-mm")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH-mm")
     @Column(name = "time")
     private Date time;
 

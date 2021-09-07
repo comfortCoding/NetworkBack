@@ -1,13 +1,10 @@
 package javapro.model.view;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javapro.model.Person;
 import javapro.model.PostLike;
 import javapro.model.Tag;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,8 +24,6 @@ public class PostView implements Serializable {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @DateTimeFormat(pattern = "yyyy.MM.dd HH-mm")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH-mm")
     @Column(name = "time", nullable = false)
     private Date time;
 
@@ -48,11 +43,9 @@ public class PostView implements Serializable {
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "post")
     private List<PostCommentView> postCommentList = new ArrayList<>();
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "post")
     private List<PostLike> postLikeList = new ArrayList<>();
 

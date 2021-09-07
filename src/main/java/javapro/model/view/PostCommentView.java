@@ -1,13 +1,9 @@
 package javapro.model.view;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javapro.model.Person;
 import javapro.model.PostLike;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,13 +22,10 @@ public class PostCommentView implements Serializable, Comparable<PostCommentView
     @Column(name = "id", nullable = false)
     private int id;
 
-    @DateTimeFormat(pattern = "yyyy.MM.dd HH-mm")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH-mm")
     @Column(name = "time", nullable = false)
     private Date time;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "post_id", nullable = false, foreignKey = @ForeignKey(name = "FK_post_id"))
     private PostView post;
 
@@ -53,7 +46,6 @@ public class PostCommentView implements Serializable, Comparable<PostCommentView
     @Column(name = "is_blocked", nullable = false)
     private boolean isBlocked;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<PostLike> commentLikeList = new ArrayList<>();
 
